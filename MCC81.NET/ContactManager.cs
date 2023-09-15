@@ -92,8 +92,19 @@ namespace MCC81.NET
         {
             Console.Clear();
             Console.WriteLine("== Tambah Kontak ==\n");
-            Console.Write("Masukkan Nama: ");
-            var name = Console.ReadLine();
+
+            string name;
+            do
+            {
+                Console.Write("Masukkan Nama: ");
+                name = Console.ReadLine();
+
+                if (string.IsNullOrWhiteSpace(name))
+                {
+                    Console.WriteLine("Nama tidak boleh kosong. Silakan masukkan nama yang valid.\n");
+                }
+            }
+            while (string.IsNullOrWhiteSpace(name));
 
             Console.Write("Masukkan Nomor Telepon: ");
             var phone = Console.ReadLine();
