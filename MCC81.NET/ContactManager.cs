@@ -150,7 +150,7 @@ namespace MCC81.NET
         {
             Console.Clear();
             Console.WriteLine("== Cari Kontak ==\n");
-            Console.Write("Masukkan Nama/NoHP/Email : ");
+            Console.Write("Masukkan Nama / Nomor HP / Email: ");
             var searchTerm = Console.ReadLine().ToLower(); // Diubah ke huruf kecil untuk pencarian yang case-insensitive
 
             var matchedContacts = contacts.Where(contact =>
@@ -241,7 +241,7 @@ namespace MCC81.NET
 
         private void DeleteContact()
         {
-            Console.WriteLine("Masukkan nama kontak yang ingin dihapus:");
+            Console.Write("Masukkan nama kontak yang ingin dihapus: ");
             var name = Console.ReadLine();
 
             var contact = contacts.Find(c => c.Name == name);
