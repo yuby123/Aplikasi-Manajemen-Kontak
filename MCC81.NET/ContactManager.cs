@@ -162,6 +162,9 @@ namespace MCC81.NET
             if (matchedContacts.Count == 0)
             {
                 Console.WriteLine("Tidak ada pengguna yang cocok dengan kata kunci yang diberikan!");
+                Console.WriteLine("Tekan Enter untuk kembali ke menu.");
+                Console.ReadLine();
+                return;
             }
             else
             {
@@ -176,20 +179,29 @@ namespace MCC81.NET
             do
             {
                 Console.WriteLine("\nMenu");
-                Console.WriteLine("1. Edit Kontak");
-                Console.WriteLine("2. Hapus Kontak");
-                Console.WriteLine("3. Back");
-                Console.Write("Masukkan Pilihan: ");
+                if (matchedContacts.Count > 0)
+                {
+                    Console.WriteLine("1. Edit Kontak");
+                    Console.WriteLine("2. Hapus Kontak");
+                    Console.WriteLine("3. Back");
+                    Console.Write("Masukkan Pilihan: ");
+                }
 
                 if (int.TryParse(Console.ReadLine(), out choice))
                 {
                     switch (choice)
                     {
                         case 1:
-                            UpdateContact();
+                            if (matchedContacts.Count > 0)
+                            {
+                                UpdateContact();
+                            }
                             break;
                         case 2:
-                            DeleteContact();
+                            if (matchedContacts.Count > 0)
+                            {
+                                DeleteContact();
+                            }
                             break;
                         case 3:
                             return;
