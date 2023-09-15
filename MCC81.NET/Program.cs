@@ -1,10 +1,11 @@
 ﻿namespace MCC81.NET
 {
-    internal class Program
+    public class Program
     {
         public static void Main()
         {
-
+            var contactManager = new ContactManager();
+            contactManager.Run();
         }
     }
 }
