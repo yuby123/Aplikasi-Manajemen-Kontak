@@ -52,6 +52,7 @@ namespace MCC81.NET
                             break;
 
                         case 5:
+                            Console.WriteLine("\nKeluar dari program...");
                             return;
 
                         default:
@@ -115,6 +116,7 @@ namespace MCC81.NET
             Console.WriteLine("Tekan Enter untuk kembali ke menu.");
             Console.ReadLine();
         }
+
         private void ViewContacts()
         {
             Console.Clear();
@@ -124,12 +126,21 @@ namespace MCC81.NET
             {
                 Console.WriteLine("Tidak ada kontak yang tersimpan.");
             }
-
-            foreach (var contact in contacts)
+            else
             {
-                Console.WriteLine($"Nama: {contact.Name}");
-                Console.WriteLine($"Telepon: {contact.PhoneNumber}");
-                Console.WriteLine($"Email: {contact.EmailAddress}\n");
+                for (int i = 0; i < contacts.Count; i++)
+                {
+                    var contact = contacts[i];
+                    Console.WriteLine($"Nama: {contact.Name}");
+                    Console.WriteLine($"Telepon: {contact.PhoneNumber}");
+                    Console.WriteLine($"Email: {contact.EmailAddress}\n");
+
+                    // Tambahkan garis pemisah antar data kontak
+                    if (i < contacts.Count - 1)
+                    {
+                        Console.WriteLine(new string('-', 25)); // Garis pemisah
+                    }
+                }
             }
             Console.WriteLine("Tekan Enter untuk kembali ke menu.");
             Console.ReadKey();
@@ -235,6 +246,9 @@ namespace MCC81.NET
 
             var newEmail = GetValidatedInput("Masukkan Email baru: ", @"^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$", "Email tidak valid!", "email", nameToUpdate);
             contact.EmailAddress = newEmail;
+
+            Console.Write("Kontak berhasil diperbarui.");
+            Console.ReadLine();
         }
 
 
