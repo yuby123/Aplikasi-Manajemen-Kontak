@@ -20,7 +20,7 @@ namespace MCC81.NET
             while (true)
             {
                 Console.Clear();
-                Console.WriteLine("== Pilih operasi==");
+                Console.WriteLine("== Aplikasi Manajemen Kontak ==\n");
                 Console.WriteLine("1. Create Contact");
                 Console.WriteLine("2. View Contact");
                 Console.WriteLine("3. View Deleted");
@@ -29,6 +29,7 @@ namespace MCC81.NET
                 Console.Write("Input :  ");
 
                 int choice;
+
                 if (int.TryParse(Console.ReadLine(), out choice))
                 {
                     switch (choice)
@@ -69,12 +70,21 @@ namespace MCC81.NET
 
         private void ViewContacts()
         {
+            Console.Clear();
+            Console.WriteLine("== Daftar Kontak ==\n");
 
-            Console.WriteLine("Daftar Kontak:");
+            if (contacts.Count == 0)
+            {
+                Console.WriteLine("Tidak ada kontak yang tersimpan.");
+            }
+
             foreach (var contact in contacts)
             {
-                Console.WriteLine($"Nama: {contact.Name}, Telepon: {contact.PhoneNumber}, Email: {contact.EmailAddress}");
+                Console.WriteLine($"Nama: {contact.Name}");
+                Console.WriteLine($"Telepon: {contact.PhoneNumber}");
+                Console.WriteLine($"Email: {contact.EmailAddress}\n");
             }
+            Console.WriteLine("Tekan Enter untuk kembali ke menu.");
             Console.ReadKey();
         }
 
