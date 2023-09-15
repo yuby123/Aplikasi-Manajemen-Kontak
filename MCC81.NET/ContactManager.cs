@@ -189,7 +189,7 @@ namespace MCC81.NET
             //ViewContacts();
             Console.Clear();
             Console.WriteLine("== Cari Kontak ==\n");
-            Console.Write("Masukkan Nama/NoHP/Email : ");
+            Console.Write("Masukkan Nama / Nomor HP / Email: ");
             var name = Console.ReadLine();
 
             // Mencari pengguna yang cocok berdasarkan nama yang mengandung kata kunci
@@ -200,6 +200,8 @@ namespace MCC81.NET
             if (searchUser.Count == 0)
             {
                 Console.WriteLine("Tidak ada pengguna yang cocok dengan kata kunci yang diberikan !");
+                Console.ReadLine();
+                return;
             }
             else
             {
@@ -216,10 +218,14 @@ namespace MCC81.NET
             do
             {
                 Console.WriteLine("Menu");
-                Console.WriteLine("1. Edit Kontak");
-                Console.WriteLine("2. Hapus Kontak");
-                Console.WriteLine("3. Back");
+                if (searchUser.Count > 0)
+                {
+                    Console.WriteLine("1. Edit Kontak");
+                    Console.WriteLine("2. Hapus Kontak");
+                }
+                Console.WriteLine("3. Kembali ke Menu Awal");
                 Console.Write("Masukkan Pilihan: ");
+
                 if (int.TryParse(Console.ReadLine(), out choice))
                 {
                     switch (choice)
@@ -244,7 +250,7 @@ namespace MCC81.NET
 
         private void UpdateContact()
         {
-            Console.WriteLine("Masukkan nama kontak yang ingin diperbarui:");
+            Console.Write("Masukkan nama kontak yang ingin diperbarui: ");
             var name = Console.ReadLine();
 
             var contact = contacts.Find(c => c.Name == name);
@@ -275,7 +281,7 @@ namespace MCC81.NET
 
         private void DeleteContact()
         {
-            Console.WriteLine("Masukkan nama kontak yang ingin dihapus:");
+            Console.Write("Masukkan nama kontak yang ingin dihapus: ");
             var name = Console.ReadLine();
 
             var contact = contacts.Find(c => c.Name == name);
