@@ -99,7 +99,7 @@ namespace MCC81.NET
             var phone = Console.ReadLine();
             while (!Regex.IsMatch(phone, @"^\+?[0-9]{8,15}$"))
             {
-                Console.WriteLine("Nomor telepon tidak valid! Masukkan lagi:");
+                Console.Write("Nomor telepon tidak valid!\n\nMasukkan Nomor Telepon: ");
                 phone = Console.ReadLine();
             }
 
@@ -107,7 +107,7 @@ namespace MCC81.NET
             var email = Console.ReadLine();
             while (!Regex.IsMatch(email, @"^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$"))
             {
-                Console.WriteLine("Email tidak valid! Masukkan lagi:");
+                Console.Write("Email tidak valid!\n\nMasukkan Email: ");
                 email = Console.ReadLine();
             }
 
