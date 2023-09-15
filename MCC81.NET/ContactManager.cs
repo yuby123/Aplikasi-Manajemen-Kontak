@@ -69,11 +69,13 @@ namespace MCC81.NET
 
         private void ViewContacts()
         {
+
             Console.WriteLine("Daftar Kontak:");
             foreach (var contact in contacts)
             {
                 Console.WriteLine($"Nama: {contact.Name}, Telepon: {contact.PhoneNumber}, Email: {contact.EmailAddress}");
             }
+            Console.ReadKey();
         }
 
         private void CreateContact()
@@ -161,14 +163,21 @@ namespace MCC81.NET
             {
                 Console.WriteLine($"Nama: {contact.Name}, Telepon: {contact.PhoneNumber}, Email: {contact.EmailAddress}");
             }
+            Console.ReadKey();
         }
 
-        private void SearchContact(string fullname)
+        private void SearchContact()
         {
+            ViewContacts();
+            Console.Write("Masukkan Nama : ");
+            var name = Console.ReadLine();
+
+
             // Mencari pengguna yang cocok berdasarkan nama yang mengandung kata kunci
-            var searchUser = contacts.Where(u => Regex.IsMatch(u.Name, fullname, RegexOptions.IgnoreCase)
-                                                 Regex.IsMatch(u.PhoneNumber, fullname, RegexOptions.IgnoreCase)
-                                                 Regex.IsMatch(u.EmailAddress, fullname, RegexOptions.IgnoreCase)).ToList();
+            var searchUser = contacts.Where(u => Regex.IsMatch(u.Name, name, RegexOptions.IgnoreCase) ||
+                                              Regex.IsMatch(u.PhoneNumber, name, RegexOptions.IgnoreCase) ||
+                                              Regex.IsMatch(u.EmailAddress, name, RegexOptions.IgnoreCase)).ToList();
+
             if (searchUser.Count == 0)
             {
                 Console.WriteLine("Tidak ada pengguna yang cocok dengan kata kunci yang diberikan !");
@@ -183,7 +192,34 @@ namespace MCC81.NET
                     Console.WriteLine($"EmailAddress : {item.EmailAddress}");
                 }
             }
-            Console.ReadLine();
+
+            int choice;
+            do
+            {
+                Console.WriteLine("Menu");
+                Console.WriteLine("1. Edit User");
+                Console.WriteLine("2. Delete User");
+                Console.WriteLine("3. Back");
+                Console.Write("Masukkan Pilihan: ");
+                if (int.TryParse(Console.ReadLine(), out choice))
+                {
+                    switch (choice)
+                    {
+                        case 1:
+                            UpdateContact();
+                            break;
+                        case 2:
+                            DeleteContact();
+                            break;
+                        case 3:
+                            return;
+                        default:
+                            Console.WriteLine("Invalid choice, please try again.");
+                            break;
+                    }
+                }
+            } while (true);
+            //Console.ReadLine();
         }
     }
 }
