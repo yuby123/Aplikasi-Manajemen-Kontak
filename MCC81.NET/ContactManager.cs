@@ -24,7 +24,7 @@ namespace MCC81.NET
                 Console.WriteLine("1. Create Contact");
                 Console.WriteLine("2. View Contact");
                 Console.WriteLine("3. View Deleted");
-                Console.WriteLine("4. Search Contact");
+                Console.WriteLine("4. Search Contact & Edit Contact");
                 Console.WriteLine("5. Exit");
                 Console.Write("Input :  ");
 
@@ -68,6 +68,91 @@ namespace MCC81.NET
 
 
 
+        private bool IsDuplicateContact(string name, string phone, string email)
+        {
+            // Loop melalui semua kontak yang ada
+            foreach (var contact in contacts)
+            {
+                // Memeriksa jika nama, nomor telepon, atau email sudah ada dalam kontak yang ada
+                if (contact.Name.Equals(name, StringComparison.OrdinalIgnoreCase) ||
+                    contact.PhoneNumber.Equals(phone, StringComparison.OrdinalIgnoreCase) ||
+                    contact.EmailAddress.Equals(email, StringComparison.OrdinalIgnoreCase))
+                {
+                    return true; // Ada kontak yang sama
+                }
+            }
+            return false; // Tidak ada kontak yang sama
+        }
+
+        private void CreateContact()
+        {
+            Console.Clear();
+            Console.WriteLine("== Tambah Kontak ==\n");
+
+            string name;
+            do
+            {
+                Console.Write("Masukkan Nama: ");
+                name = Console.ReadLine();
+
+                if (string.IsNullOrWhiteSpace(name))
+                {
+                    Console.WriteLine("Nama tidak boleh kosong. Silakan masukkan nama yang valid.\n");
+                }
+            }
+            while (string.IsNullOrWhiteSpace(name));
+            
+            string phone;
+            bool isPhoneValid = false;
+            do
+            {
+                Console.Write("Masukkan Nomor Telepon: ");
+                phone = Console.ReadLine();
+                if (!Regex.IsMatch(phone, @"^\+?[0-9]{8,15}$"))
+                {
+                    Console.WriteLine("Nomor telepon tidak valid!");
+                }
+                else if (IsDuplicateContact(name, phone, ""))
+                {
+                    Console.WriteLine("Nomor telepon telah digunakan.");
+                }
+                else
+                {
+                    isPhoneValid = true;
+                }
+            }
+            while (!isPhoneValid);
+
+            string email;
+            bool isEmailValid = false;
+            do
+            {
+                Console.Write("Masukkan Email: ");
+                email = Console.ReadLine();
+                if (!Regex.IsMatch(email, @"^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$"))
+                {
+                    Console.Write("Email tidak valid!");
+                }
+                else if (IsDuplicateContact("", "", email))
+                {
+                    Console.WriteLine("Email telah digunakan.");
+                }
+                else
+                {
+                    isEmailValid = true;
+                }
+            }
+            while (!isEmailValid);
+
+
+            var contact = new Contact(name, phone, email);
+            contacts.Add(contact);
+            Console.WriteLine("\nKontak berhasil ditambahkan.");
+            Console.WriteLine("Tekan Enter untuk kembali ke menu.");
+            Console.ReadLine();
+
+
+        }
         private void ViewContacts()
         {
             Console.Clear();
@@ -88,48 +173,6 @@ namespace MCC81.NET
             Console.ReadKey();
         }
 
-        private void CreateContact()
-        {
-            Console.Clear();
-            Console.WriteLine("== Tambah Kontak ==\n");
-
-            string name;
-            do
-            {
-                Console.Write("Masukkan Nama: ");
-                name = Console.ReadLine();
-
-                if (string.IsNullOrWhiteSpace(name))
-                {
-                    Console.WriteLine("Nama tidak boleh kosong. Silakan masukkan nama yang valid.\n");
-                }
-            }
-            while (string.IsNullOrWhiteSpace(name));
-
-            Console.Write("Masukkan Nomor Telepon: ");
-            var phone = Console.ReadLine();
-            while (!Regex.IsMatch(phone, @"^\+?[0-9]{8,15}$"))
-            {
-                Console.Write("Nomor telepon tidak valid!\n\nMasukkan Nomor Telepon: ");
-                phone = Console.ReadLine();
-            }
-
-            Console.Write("Masukkan Email: ");
-            var email = Console.ReadLine();
-            while (!Regex.IsMatch(email, @"^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$"))
-            {
-                Console.Write("Email tidak valid!\n\nMasukkan Email: ");
-                email = Console.ReadLine();
-            }
-
-            var contact = new Contact(name, phone, email);
-            contacts.Add(contact);
-            Console.WriteLine("\nKontak berhasil ditambahkan.");
-            Console.WriteLine("Tekan Enter untuk kembali ke menu.");
-            Console.ReadLine();
-        }
-
-        
         private void ViewDeletedContacts()
         {
             Console.Clear();
@@ -146,7 +189,7 @@ namespace MCC81.NET
             //ViewContacts();
             Console.Clear();
             Console.WriteLine("== Cari Kontak ==\n");
-            Console.Write("Masukkan Nama : ");
+            Console.Write("Masukkan Nama/NoHP/Email : ");
             var name = Console.ReadLine();
 
             // Mencari pengguna yang cocok berdasarkan nama yang mengandung kata kunci
